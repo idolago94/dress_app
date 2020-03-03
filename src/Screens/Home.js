@@ -82,14 +82,10 @@ class Home extends Component {
         />
         <FlatList
           style={{flex: 1}}
-          keyExtractor={item => item.index}
+          keyExtractor={(item, index) => index.toString()}
           data={this.state.searchResults}
           renderItem={({item, i}) => (
-            <Item
-              key={i}
-              data={item}
-              onAddItem={item => this.onAddItem(item)}
-            />
+            <Item data={item} onAddItem={item => this.onAddItem(item)} />
           )}
         />
         <View
@@ -114,9 +110,11 @@ class Home extends Component {
                   Routes.Screens.SHIRT_SELECT.routeName,
                 )
               }
-              disabled={Object.keys(this.props.sets.newSet).find(
-                item => item == 'shirt',
-              )}
+              disabled={
+                !!Object.keys(this.props.sets.newSet).find(
+                  item => item == 'shirt',
+                )
+              }
             />
             <Button
               title={'pants'}
@@ -125,9 +123,11 @@ class Home extends Component {
                   Routes.Screens.PANTS_SELECT.routeName,
                 )
               }
-              disabled={Object.keys(this.props.sets.newSet).find(
-                item => item == 'pants',
-              )}
+              disabled={
+                !!Object.keys(this.props.sets.newSet).find(
+                  item => item == 'pants',
+                )
+              }
             />
             <Button
               title={'shoes'}
@@ -136,9 +136,11 @@ class Home extends Component {
                   Routes.Screens.SHOES_SELECT.routeName,
                 )
               }
-              disabled={Object.keys(this.props.sets.newSet).find(
-                item => item == 'shoes',
-              )}
+              disabled={
+                !!Object.keys(this.props.sets.newSet).find(
+                  item => item == 'shoes',
+                )
+              }
             />
           </View>
           <Button
@@ -149,10 +151,16 @@ class Home extends Component {
         </View>
         <FlatList
           style={{flex: 1}}
-          keyExtractor={item => item.index}
           data={this.props.sets.setList}
-          renderItem={({item, index}) => <Set data={item} index={index} />}
-          ListHeaderComponent={<Text style={{fontWeight: 'bold', padding: 4}}>{this.props.sets.setList.length} set completed: </Text>}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index}) => (
+            <Set key={`set-${index}`} data={item} />
+          )}
+          ListHeaderComponent={
+            <Text style={{fontWeight: 'bold', padding: 4}}>
+              {this.props.sets.setList.length} set completed:{' '}
+            </Text>
+          }
         />
       </View>
     );

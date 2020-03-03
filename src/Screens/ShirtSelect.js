@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Button, Alert} from 'react-native';
 import {inject, observer} from 'mobx-react';
 import Routes from '../Routes/Routes';
-import Item from "../components/Item";
+import Item from '../components/Item';
 
 class ShirtSelect extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class ShirtSelect extends Component {
         </Text>
         <View style={styles.listBox}>
           {this.props.items.shirts.map((sh, i) => (
-              <Item key={i} data={sh} onAddItem={(item) => this.onAddItem(item)} />
+            <Item key={i} data={sh} onAddItem={item => this.onAddItem(item)} />
           ))}
         </View>
       </View>
