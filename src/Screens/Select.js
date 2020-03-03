@@ -27,6 +27,7 @@ class Select extends Component {
       this.setState({
         type: navigation.state.params.type,
         items: this.props.items[navigation.state.params.type],
+        search: '',
       });
     });
   }
@@ -38,6 +39,7 @@ class Select extends Component {
 
   handleSearch(text) {
     console.log(text);
+    this.setState({search: text});
     if (text.length > 2) {
       console.log('search...');
       let result = this.state.items.filter(item => {
@@ -95,8 +97,9 @@ class Select extends Component {
             backgroundColor: 'gray',
             width: Dimensions.get('window').width * 0.6,
             padding: 10,
-            alignSelf: 'center'
+            alignSelf: 'center',
           }}
+          value={this.state.search}
           placeholder={'search item'}
           onChangeText={value => this.handleSearch(value.toLowerCase())}
         />
