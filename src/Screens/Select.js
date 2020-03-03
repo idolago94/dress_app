@@ -17,13 +17,17 @@ class Select extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      items: [],
       type: props.navigation.getParam('type'),
     };
   }
 
   componentDidMount(): void {
     this.props.navigation.addListener('willFocus', navigation => {
-      this.setState({type: navigation.state.params.type});
+      this.setState({
+        type: navigation.state.params.type,
+        items: this.props.items[navigation.state.params.type],
+      });
     });
   }
 
@@ -32,13 +36,11 @@ class Select extends Component {
     this.props.navigation.navigate(Routes.Screens.HOME.routeName);
   }
 
-
-
   handleSearch(text) {
     console.log(text);
     if (text.length > 2) {
       console.log('search...');
-      let result = this.props.items.allItems.filter(item => {
+      let result = this.state.items.filter(item => {
         if (item.name.search(text) != -1) {
           return true;
         }
@@ -50,11 +52,11 @@ class Select extends Component {
         }
         return false;
       });
-      this.setState({searchResults: result});
+      this.setState({items: result});
     } else {
       console.log('default');
-      let defaultResults = this.props.items.allItems.slice(0, 5);
-      this.setState({searchResults: defaultResults});
+      let defaultResults = this.props.items[this.state.type].slice(0, 5);
+      this.setState({items: defaultResults});
     }
   }
 
@@ -62,11 +64,21 @@ class Select extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{this.state.type} Select</Text>
+        <TextInput
+          style={{
+            borderRadius: 10,
+            backgroundColor: 'gray',
+            width: Dimensions.get('window').width * 0.6,
+            padding: 10,
+          }}
+          placeholder={'search item'}
+          onChangeText={value => this.handleSearch(value.toLowerCase())}
+        />
         <Text style={{fontWeight: 'bold'}}>
-          Found {this.props.items[this.state.type].length} items.
+          Found {this.state.items.length} items.
         </Text>
         <View style={styles.listBox}>
-          {this.props.items[this.state.type].map((sh, i) => (
+          {this.state.items.map((sh, i) => (
             <Item key={i} data={sh} onAddItem={item => this.onAddItem(item)} />
           ))}
         </View>
