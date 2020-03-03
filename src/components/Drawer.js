@@ -5,15 +5,20 @@ import Routes from '../Routes/Routes';
 import Item from '../components/Item';
 
 export default function Drawer(props) {
+
+    function toSelect(type) {
+        props.navigation.navigate(Routes.Screens.SELECT.routeName, {type: type});
+    }
+
         return (
             <View style={styles.container}>
-                <TouchableHighlight style={styles.tab}>
+                <TouchableHighlight onPress={() => toSelect('shirt')} style={styles.tab}>
                     <Text style={styles.tabContent}>Shirt Select</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.tab}>
+                <TouchableHighlight onPress={() => toSelect('pants')} style={styles.tab}>
                     <Text style={styles.tabContent}>Pants Select</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.tab}>
+                <TouchableHighlight onPress={() => toSelect('shoes')} style={styles.tab}>
                     <Text style={styles.tabContent}>Shoes Select</Text>
                 </TouchableHighlight>
             </View>

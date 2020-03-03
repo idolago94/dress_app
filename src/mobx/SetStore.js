@@ -32,11 +32,11 @@ class SetStore {
     this.newSet = {};
   }
 
-  setItemSet(item) {
+  setItemSet(itemType, item) {
     console.log('set item', item);
     this.newSet = {
       ...this.newSet,
-      ...item
+      [itemType]: item,
     };
     AsyncStorage.setItem(
       storageKeys.NON_COMPLETED_SET,

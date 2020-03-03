@@ -7,18 +7,20 @@ import Item from '../components/Item';
 class Select extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      type: props.navigation.getParam('type'),
+    };
   }
 
   onAddItem(item) {
-    this.props.sets.setItemSet(this.props.type, item);
+    this.props.sets.setItemSet(this.state.type, item);
     this.props.navigation.navigate(Routes.Screens.HOME.routeName);
   }
 
   componentDidMount(): void {
-      this.props.navigation.addListener('willFocus', (params) => {
-          console.log(params);
-      })
+      this.props.navigation.addListener('willFocus', (navigation) => {
+          this.setState({type: navigation.state.params.type})
+      });
   }
 
     render() {

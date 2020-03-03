@@ -61,6 +61,10 @@ class Home extends Component {
     this.props.sets.setItemSet(type, item);
   }
 
+  toSelect(type) {
+    this.props.navigation.navigate(Routes.Screens.SELECT.routeName, {type: type});
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -108,9 +112,7 @@ class Home extends Component {
             <Button
               title={'shirt'}
               onPress={() =>
-                this.props.navigation.navigate(
-                  Routes.Screens.SHIRT_SELECT.routeName,
-                )
+                this.toSelect('shirt')
               }
               disabled={
                 !!Object.keys(this.props.sets.newSet).find(
@@ -121,9 +123,7 @@ class Home extends Component {
             <Button
               title={'pants'}
               onPress={() =>
-                this.props.navigation.navigate(
-                  Routes.Screens.PANTS_SELECT.routeName,
-                )
+                this.toSelect('pants')
               }
               disabled={
                 !!Object.keys(this.props.sets.newSet).find(
@@ -134,9 +134,7 @@ class Home extends Component {
             <Button
               title={'shoes'}
               onPress={() =>
-                this.props.navigation.navigate(
-                  Routes.Screens.SHOES_SELECT.routeName,
-                )
+                this.toSelect('shoes')
               }
               disabled={
                 !!Object.keys(this.props.sets.newSet).find(
