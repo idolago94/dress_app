@@ -77,6 +77,14 @@ class Select extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View>
+          <Button
+              title={'Back'}
+            onPress={() =>
+              this.props.navigation.navigate(Routes.Screens.HOME.routeName)
+            }
+          />
+        </View>
         <View
           style={{
             flexDirection: 'row',
