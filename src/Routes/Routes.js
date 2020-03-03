@@ -1,12 +1,13 @@
 export default Routes = {
   Navigators: {
     ITEMS: {routeName: 'NAVIGATOR_ITEMS'},
+    MAIN: {routeName: 'Home'},
   },
   Screens: {
-    HOME: {routeName: 'Home'},
+    HOME: {routeName: 'HomeScreen'},
     COMPLETE_SET: {routeName: 'CompleteSet'},
-    SHOES_SELECT: {routeName: 'ShoesSelect'},
-    PANTS_SELECT: {routeName: 'PantsSelect'},
-    SHIRT_SELECT: {routeName: 'ShirtSelect'},
+    SHOES_SELECT: {routeName: 'Shoes Select'},
+    PANTS_SELECT: {routeName: 'Pants Select'},
+    SHIRT_SELECT: {routeName: 'Shirt Select'},
   },
 };

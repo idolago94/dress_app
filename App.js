@@ -28,11 +28,12 @@ import {Provider} from 'mobx-react';
 import MainNavigator from './src/Routes/MainNavigator';
 import ItemsStore from './src/mobx/ItemsStore';
 import SetStore from './src/mobx/SetStore';
+import DrawerNavigator from './src/Routes/DrawerNavigator';
 
 const App: () => React$Node = () => {
   return (
     <Provider items={ItemsStore} sets={SetStore}>
-      <MainNavigator />
+      <DrawerNavigator />
     </Provider>
   );
 };

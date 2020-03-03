@@ -4,14 +4,10 @@ import {createStackNavigator} from 'react-navigation-stack';
 import Routes from './Routes';
 import Home from '../Screens/Home';
 import CompleteSet from '../Screens/CompleteSet';
-import ItemsNavigator from './ItemsNavigator';
 
 export default createAppContainer(
   createStackNavigator(
     {
-      [Routes.Navigators.ITEMS.routeName]: {
-        screen: ItemsNavigator,
-      },
       [Routes.Screens.HOME.routeName]: {
         screen: Home,
       },
