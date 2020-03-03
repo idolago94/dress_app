@@ -80,14 +80,16 @@ class Home extends Component {
           placeholder={'search item'}
           onChangeText={value => this.handleSearch(value.toLowerCase())}
         />
-        <FlatList
-          style={{flex: 1}}
-          keyExtractor={(item, index) => index.toString()}
-          data={this.state.searchResults}
-          renderItem={({item, i}) => (
-            <Item data={item} onAddItem={item => this.onAddItem(item)} />
-          )}
-        />
+        {this.state.searchResults.length < 1 ? null : (
+          <FlatList
+            style={{flex: 1}}
+            keyExtractor={(item, index) => index.toString()}
+            data={this.state.searchResults}
+            renderItem={({item, i}) => (
+              <Item data={item} onAddItem={item => this.onAddItem(item)} />
+            )}
+          />
+        )}
         <View
           style={{
             padding: 10,

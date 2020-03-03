@@ -6,6 +6,8 @@ import ShirtSelect from '../Screens/ShirtSelect';
 import PantsSelect from '../Screens/PantsSelect';
 import ShoesSelect from '../Screens/ShoesSelect';
 import MainNavigator from './MainNavigator';
+import Select from '../Screens/Select';
+import Drawer from '../components/Drawer';
 
 export default createAppContainer(
   createDrawerNavigator(
@@ -22,9 +24,13 @@ export default createAppContainer(
       [Routes.Screens.SHOES_SELECT.routeName]: {
         screen: ShoesSelect,
       },
+      [Routes.Screens.SELECT.routeName]: {
+        screen: Select,
+      },
     },
     {
       initialRouteName: Routes.Navigators.MAIN.routeName,
+        contentComponent: Drawer
     },
   ),
 );
