@@ -152,6 +152,7 @@ class Home extends Component {
           keyExtractor={item => item.index}
           data={this.props.sets.setList}
           renderItem={({item, index}) => <Set data={item} index={index} />}
+          ListHeaderComponent={<Text style={{fontWeight: 'bold', padding: 4}}>{this.props.sets.setList.length} set completed: </Text>}
         />
       </View>
     );
