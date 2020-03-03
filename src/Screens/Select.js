@@ -15,6 +15,7 @@ import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 class Select extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +32,17 @@ class Select extends Component {
         search: '',
       });
     });
+  }
+
+  componentDidUpdate() {
+    let itemType = this.props.navigation.getParam('type');
+    if(itemType != this.state.type) {
+      this.setState({
+        type: this.props.navigation.state.params.type,
+        items: this.props.items[this.props.navigation.state.params.type],
+        search: '',
+      });
+    }
   }
 
   onAddItem(item) {
