@@ -34,7 +34,7 @@ export default class Item extends Component {
       },
       {
         text: 'No',
-        onPress: () => this.setColor(null),
+        onPress: () => this.setState({color: null}),
       },
     ]);
   }

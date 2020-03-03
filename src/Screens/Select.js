@@ -74,7 +74,12 @@ class Select extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <Icon
             style={{padding: 10}}
             name={this.getIconName(this.state.type)}

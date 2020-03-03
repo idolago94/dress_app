@@ -18,7 +18,7 @@ export default createAppContainer(
     },
     {
       initialRouteName: Routes.Navigators.MAIN.routeName,
-        contentComponent: Drawer
+      contentComponent: Drawer,
     },
   ),
 );

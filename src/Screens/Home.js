@@ -62,7 +62,9 @@ class Home extends Component {
   }
 
   toSelect(type) {
-    this.props.navigation.navigate(Routes.Screens.SELECT.routeName, {type: type});
+    this.props.navigation.navigate(Routes.Screens.SELECT.routeName, {
+      type: type,
+    });
   }
 
   render() {
@@ -111,9 +113,7 @@ class Home extends Component {
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Button
               title={'shirt'}
-              onPress={() =>
-                this.toSelect('shirt')
-              }
+              onPress={() => this.toSelect('shirt')}
               disabled={
                 !!Object.keys(this.props.sets.newSet).find(
                   item => item == 'shirt',
@@ -122,9 +122,7 @@ class Home extends Component {
             />
             <Button
               title={'pants'}
-              onPress={() =>
-                this.toSelect('pants')
-              }
+              onPress={() => this.toSelect('pants')}
               disabled={
                 !!Object.keys(this.props.sets.newSet).find(
                   item => item == 'pants',
@@ -133,9 +131,7 @@ class Home extends Component {
             />
             <Button
               title={'shoes'}
-              onPress={() =>
-                this.toSelect('shoes')
-              }
+              onPress={() => this.toSelect('shoes')}
               disabled={
                 !!Object.keys(this.props.sets.newSet).find(
                   item => item == 'shoes',
@@ -143,14 +139,9 @@ class Home extends Component {
               }
             />
           </View>
-          {
-            Object.keys(this.props.sets.newSet).length < 3 ? null : (
-                <Button
-                    title={'SAVE'}
-                    onPress={() => this.onSaveSet()}
-                />
-            )
-          }
+          {Object.keys(this.props.sets.newSet).length < 3 ? null : (
+            <Button title={'SAVE'} onPress={() => this.onSaveSet()} />
+          )}
         </View>
         <FlatList
           style={{flex: 1}}
