@@ -143,11 +143,14 @@ class Home extends Component {
               }
             />
           </View>
-          <Button
-            title={'SAVE'}
-            onPress={() => this.onSaveSet()}
-            disabled={Object.keys(this.props.sets.newSet).length < 3}
-          />
+          {
+            Object.keys(this.props.sets.newSet).length < 3 ? null : (
+                <Button
+                    title={'SAVE'}
+                    onPress={() => this.onSaveSet()}
+                />
+            )
+          }
         </View>
         <FlatList
           style={{flex: 1}}

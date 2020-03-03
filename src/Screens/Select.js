@@ -3,15 +3,15 @@ import {
   StyleSheet,
   View,
   Text,
-  Button,
-  Alert,
   TextInput,
   Dimensions,
+  Platform,
   FlatList,
 } from 'react-native';
 import {inject, observer} from 'mobx-react';
 import Routes from '../Routes/Routes';
 import Item from '../components/Item';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 class Select extends Component {
   constructor(props) {
@@ -60,10 +60,30 @@ class Select extends Component {
     }
   }
 
+  getIconName(itemType) {
+    switch (itemType) {
+      case 'shirt':
+        return 'tshirt';
+      case 'pants':
+        return 'running';
+      case 'shoes':
+        return 'shoe-prints';
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{this.state.type} Select</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <Icon
+            style={{padding: 10}}
+            name={this.getIconName(this.state.type)}
+            color={'black'}
+            size={50}
+          />
+          <Text style={styles.title}>{this.state.type} Select</Text>
+        </View>
+
         <TextInput
           style={{
             borderRadius: 10,
@@ -89,6 +109,7 @@ class Select extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Platform.OS == 'ios' ? 40 : 0,
     flex: 1,
   },
   title: {
