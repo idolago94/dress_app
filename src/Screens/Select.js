@@ -7,6 +7,7 @@ import {
   Dimensions,
   Platform,
   FlatList,
+  Button,
 } from 'react-native';
 import {inject, observer} from 'mobx-react';
 import Routes from '../Routes/Routes';
@@ -111,6 +112,23 @@ class Select extends Component {
             <Item key={i} data={sh} onAddItem={item => this.onAddItem(item)} />
           ))}
         </View>
+        <View style={styles.footer}>
+          {['shirt', 'pants', 'shoes'].map((itemType, i) =>
+            itemType == this.state.type ? null : (
+              <Button
+                key={i}
+                title={`select ${itemType}`}
+                onPress={() =>
+                  this.setState({
+                    type: itemType,
+                    items: this.props.items[itemType],
+                    search: '',
+                  })
+                }
+              />
+            ),
+          )}
+        </View>
       </View>
     );
   }
@@ -136,6 +154,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  }
 });
 
 export default inject('sets', 'items')(observer(Select));

@@ -111,33 +111,45 @@ class Home extends Component {
             </Text>
           )}
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Button
-              title={'shirt'}
-              onPress={() => this.toSelect('shirt')}
-              disabled={
-                !!Object.keys(this.props.sets.newSet).find(
-                  item => item == 'shirt',
-                )
-              }
-            />
-            <Button
-              title={'pants'}
-              onPress={() => this.toSelect('pants')}
-              disabled={
-                !!Object.keys(this.props.sets.newSet).find(
-                  item => item == 'pants',
-                )
-              }
-            />
-            <Button
-              title={'shoes'}
-              onPress={() => this.toSelect('shoes')}
-              disabled={
-                !!Object.keys(this.props.sets.newSet).find(
-                  item => item == 'shoes',
-                )
-              }
-            />
+            {['shirt', 'pants', 'shoes'].map((itemType, i) => (
+              <Button
+                key={i}
+                title={itemType}
+                onPress={() => this.toSelect(itemType)}
+                disabled={
+                  !!Object.keys(this.props.sets.newSet).find(
+                    item => item == itemType,
+                  )
+                }
+              />
+            ))}
+            {/*<Button*/}
+            {/*  title={'shirt'}*/}
+            {/*  onPress={() => this.toSelect('shirt')}*/}
+            {/*  disabled={*/}
+            {/*    !!Object.keys(this.props.sets.newSet).find(*/}
+            {/*      item => item == 'shirt',*/}
+            {/*    )*/}
+            {/*  }*/}
+            {/*/>*/}
+            {/*<Button*/}
+            {/*  title={'pants'}*/}
+            {/*  onPress={() => this.toSelect('pants')}*/}
+            {/*  disabled={*/}
+            {/*    !!Object.keys(this.props.sets.newSet).find(*/}
+            {/*      item => item == 'pants',*/}
+            {/*    )*/}
+            {/*  }*/}
+            {/*/>*/}
+            {/*<Button*/}
+            {/*  title={'shoes'}*/}
+            {/*  onPress={() => this.toSelect('shoes')}*/}
+            {/*  disabled={*/}
+            {/*    !!Object.keys(this.props.sets.newSet).find(*/}
+            {/*      item => item == 'shoes',*/}
+            {/*    )*/}
+            {/*  }*/}
+            {/*/>*/}
           </View>
           {Object.keys(this.props.sets.newSet).length < 3 ? null : (
             <Button title={'SAVE'} onPress={() => this.onSaveSet()} />
