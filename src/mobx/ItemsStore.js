@@ -2,7 +2,7 @@ import {observable, decorate, action} from 'mobx';
 
 class ItemsStore {
     allItems = [];
-  shirts = [];
+  shirt = [];
   pants = [];
   shoes = [];
 
@@ -12,7 +12,7 @@ class ItemsStore {
       .then(res => res.json())
       .then(response => {
         this.allItems = response.results;
-        this.shirts = response.results.filter(item => item.type == 'shirt').sort((a, b) => a.name.localeCompare(b.name));
+        this.shirt = response.results.filter(item => item.type == 'shirt').sort((a, b) => a.name.localeCompare(b.name));
         this.pants = response.results.filter(item => item.type == 'pants').sort((a, b) => a.name.localeCompare(b.name));
         this.shoes = response.results.filter(item => item.type == 'shoes').sort((a, b) => a.name.localeCompare(b.name));
       });
