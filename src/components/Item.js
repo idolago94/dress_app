@@ -2,33 +2,44 @@ import {StyleSheet, View, Text, FlatList, Button, Alert} from 'react-native';
 import React, {Component, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function Item(props) {
-  const [color, setColor] = useState(null);
+export default class Item extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: null,
+    };
+  }
 
-  function onSizePress(size) {
+  componentDidUpdate(prevProps): void {
+    if(prevProps != this.props) {
+      this.setState({color: null});
+    }
+  }
+
+  onSizePress(size) {
     Alert.alert('Add this item to the set?', null, [
       {
         text: 'Yes',
         onPress: () => {
           let itemData = {
-            [props.data.type]: {
-              name: props.data.name,
-              brand: props.data.brand,
-              color: color,
+            [this.props.data.type]: {
+              name: this.props.data.name,
+              brand: this.props.data.brand,
+              color: this.state.color,
               size: size,
             },
           };
-          props.onAddItem(itemData);
+          this.props.onAddItem(itemData);
         },
       },
       {
         text: 'No',
-        onPress: () => setColor(null),
+        onPress: () => this.setColor(null),
       },
     ]);
   }
 
-  function getIconName(itemType) {
+  getIconName(itemType) {
     switch (itemType) {
       case 'shirt':
         return 'tshirt';
@@ -39,49 +50,51 @@ export default function Item(props) {
     }
   }
 
-  return (
-    <View style={styles.container}>
-      <Icon
-        style={{padding: 10}}
-        name={getIconName(props.data.type)}
-        color={'black'}
-        size={20}
-      />
-      <View>
-        <Text>
-          {props.data.name}({props.data.brand}):
-        </Text>
-        <View style={styles.colorsBox}>
-          {props.data.colors.map((color, cI) => (
-            <Button
-              key={cI}
-              title={color}
-              color={color}
-              onPress={() => setColor(color)}
-            />
-          ))}
-        </View>
-        {color ? (
-          <View style={styles.sizesBox}>
-            {props.data.sizes.map((size, sI) => (
+  render() {
+    return (
+      <View style={styles.container}>
+        <Icon
+          style={{padding: 10}}
+          name={this.getIconName(this.props.data.type)}
+          color={'black'}
+          size={20}
+        />
+        <View>
+          <Text>
+            {this.props.data.name}({this.props.data.brand}):
+          </Text>
+          <View style={styles.colorsBox}>
+            {this.props.data.colors.map((color, cI) => (
               <Button
-                key={sI}
-                style={{
-                  borderRadius: 999,
-                  backgroundColor: 'gray',
-                  padding: 3,
-                  margin: 3,
-                }}
-                title={size.toString()}
-                color={'black'}
-                onPress={() => onSizePress(size)}
+                key={cI}
+                title={color}
+                color={color}
+                onPress={() => this.setState({color: color})}
               />
             ))}
           </View>
-        ) : null}
+          {this.state.color ? (
+            <View style={styles.sizesBox}>
+              {this.props.data.sizes.map((size, sI) => (
+                <Button
+                  key={sI}
+                  style={{
+                    borderRadius: 999,
+                    backgroundColor: 'gray',
+                    padding: 3,
+                    margin: 3,
+                  }}
+                  title={size.toString()}
+                  color={'black'}
+                  onPress={() => this.onSizePress(size)}
+                />
+              ))}
+            </View>
+          ) : null}
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
