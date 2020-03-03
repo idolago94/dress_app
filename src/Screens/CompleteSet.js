@@ -1,25 +1,22 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import Routes from '../Routes/Routes';
-import Set from "../components/Set";
-import {inject, observer} from "mobx-react";
+import Set from '../components/Set';
+import {inject, observer} from 'mobx-react';
 
 class CompleteSet extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props){
-        super(props);
-    }
-
-    componentDidMount() {
-        console.log('complete',this.props.sets.setList[this.props.sets.setList.length-1])
-    }
-
-    render() {
+  render() {
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 100}}>Set</Text>
         <Text style={{fontSize: 100}}>Saved!</Text>
-          <Set data={this.props.sets.setList[this.props.sets.setList.length-1]} />
+        <Set
+          data={this.props.sets.setList[this.props.sets.setList.length - 1]}
+        />
         <Button
           title="Back Home"
           onPress={() =>
