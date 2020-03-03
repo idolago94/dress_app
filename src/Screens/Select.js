@@ -90,6 +90,7 @@ class Select extends Component {
             backgroundColor: 'gray',
             width: Dimensions.get('window').width * 0.6,
             padding: 10,
+            alignSelf: 'center'
           }}
           placeholder={'search item'}
           onChangeText={value => this.handleSearch(value.toLowerCase())}
