@@ -14,6 +14,8 @@ import {inject, observer} from 'mobx-react';
 import Routes from '../Routes/Routes';
 import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {create} from 'mobx-persist';
+import SetStore from '../mobx/SetStore';
 
 
 @inject('sets', 'items') @observer

@@ -1,4 +1,5 @@
-import {observable, decorate, action, computed} from 'mobx';
+import {observable, action, computed} from 'mobx';
+import {create, persist} from 'mobx-persist';
 import {AsyncStorage} from 'react-native';
 
 const storageKeys = {
@@ -7,29 +8,14 @@ const storageKeys = {
 };
 
 class SetStore {
-  constructor() {
-    AsyncStorage.getItem(storageKeys.SETS, (err, data) => {
-      if (data) {
-        this.setList = JSON.parse(data);
-      }
-    });
 
-    AsyncStorage.getItem(storageKeys.NON_COMPLETED_SET, (err, data) => {
-      if (data) {
-        this.newSet = JSON.parse(data);
-      }
-    });
-  }
-
-  @observable setList = [];
-  @observable newSet = {};
+  @persist('list') @observable setList = [];
+  @persist('object') @observable newSet = {};
 
   @action
   addSet() {
     console.log('add set');
     this.setList.push(this.newSet);
-    AsyncStorage.clear();
-    AsyncStorage.setItem(storageKeys.SETS, JSON.stringify(this.setList));
     this.newSet = {};
   }
 
@@ -41,10 +27,6 @@ class SetStore {
       ...this.newSet,
       [itemType]: item,
     };
-    AsyncStorage.setItem(
-      storageKeys.NON_COMPLETED_SET,
-      JSON.stringify(this.newSet),
-    );
   }
 
   @computed
