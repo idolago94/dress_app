@@ -1,4 +1,4 @@
-import {observable, decorate, action} from 'mobx';
+import {observable, decorate, action, computed} from 'mobx';
 import {AsyncStorage} from 'react-native';
 
 const storageKeys = {
@@ -21,9 +21,10 @@ class SetStore {
     });
   }
 
-  setList = [];
-  newSet = {};
+  @observable setList = [];
+  @observable newSet = {};
 
+  @action
   addSet() {
     console.log('add set');
     this.setList.push(this.newSet);
@@ -32,8 +33,10 @@ class SetStore {
     this.newSet = {};
   }
 
+  @action
   setItemSet(itemType, item) {
     console.log('set item', item);
+    console.log('type', itemType);
     this.newSet = {
       ...this.newSet,
       [itemType]: item,
@@ -43,14 +46,16 @@ class SetStore {
       JSON.stringify(this.newSet),
     );
   }
+
+  @computed
+  get getList() {
+    return this.setList.slice();
+  }
+
+  @computed
+  get getNewSet() {
+    return Object.assign({}, this.newSet);
+  }
 }
-
-decorate(SetStore, {
-  setList: observable,
-  newSet: observable,
-
-  addSet: action,
-  setItemSet: action,
-});
 
 export default new SetStore();

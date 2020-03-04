@@ -7,7 +7,7 @@ import {
   Button,
   TextInput,
   Dimensions,
-  TouchableHighlight,
+  TouchableHighlight, AsyncStorage,
 } from 'react-native';
 import Set from '../components/Set';
 import {inject, observer} from 'mobx-react';
@@ -15,15 +15,18 @@ import Routes from '../Routes/Routes';
 import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+
+@inject('sets', 'items')
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.itemTypes = ['shirt', 'pants', 'shoes'];
     this.state = {
       searchResults: [],
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.items.fetchItems();
   }
 
@@ -36,7 +39,7 @@ class Home extends Component {
     console.log(text);
     if (text.length > 2) {
       console.log('search...');
-      let result = this.props.items.allItems.filter(item => {
+      let result = this.props.items.getAll.filter(item => {
         if (item.name.search(text) != -1) {
           return true;
         }
@@ -51,7 +54,7 @@ class Home extends Component {
       this.setState({searchResults: result});
     } else {
       console.log('default');
-      let defaultResults = this.props.items.allItems.slice(0, 5);
+      let defaultResults = this.props.items.getAll.slice(0, 5);
       this.setState({searchResults: defaultResults});
     }
   }
@@ -104,60 +107,33 @@ class Home extends Component {
             borderRadius: 10,
             borderColor: 'red',
           }}>
-          {Object.keys(this.props.sets.newSet) < 1 ? null : (
+          {Object.keys(this.props.sets.getNewSet) < 1 ? null : (
             <Text>
               You have set not completed(
-              {Object.keys(this.props.sets.newSet).length}/3)
+              {Object.keys(this.props.sets.getNewSet).length}/3)
             </Text>
           )}
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            {['shirt', 'pants', 'shoes'].map((itemType, i) => (
+            {this.itemTypes.map((itemType, i) => (
               <Button
                 key={i}
                 title={itemType}
                 onPress={() => this.toSelect(itemType)}
                 disabled={
-                  !!Object.keys(this.props.sets.newSet).find(
+                  !!Object.keys(this.props.sets.getNewSet).find(
                     item => item == itemType,
                   )
                 }
               />
             ))}
-            {/*<Button*/}
-            {/*  title={'shirt'}*/}
-            {/*  onPress={() => this.toSelect('shirt')}*/}
-            {/*  disabled={*/}
-            {/*    !!Object.keys(this.props.sets.newSet).find(*/}
-            {/*      item => item == 'shirt',*/}
-            {/*    )*/}
-            {/*  }*/}
-            {/*/>*/}
-            {/*<Button*/}
-            {/*  title={'pants'}*/}
-            {/*  onPress={() => this.toSelect('pants')}*/}
-            {/*  disabled={*/}
-            {/*    !!Object.keys(this.props.sets.newSet).find(*/}
-            {/*      item => item == 'pants',*/}
-            {/*    )*/}
-            {/*  }*/}
-            {/*/>*/}
-            {/*<Button*/}
-            {/*  title={'shoes'}*/}
-            {/*  onPress={() => this.toSelect('shoes')}*/}
-            {/*  disabled={*/}
-            {/*    !!Object.keys(this.props.sets.newSet).find(*/}
-            {/*      item => item == 'shoes',*/}
-            {/*    )*/}
-            {/*  }*/}
-            {/*/>*/}
           </View>
-          {Object.keys(this.props.sets.newSet).length < 3 ? null : (
+          {Object.keys(this.props.sets.getNewSet).length < 3 ? null : (
             <Button title={'SAVE'} onPress={() => this.onSaveSet()} />
           )}
         </View>
         <FlatList
           style={{flex: 1}}
-          data={this.props.sets.setList}
+          data={this.props.sets.getList}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => (
             <Set key={`set-${index}`} data={item} />
@@ -184,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default inject('sets', 'items')(observer(Home));
+export default Home;

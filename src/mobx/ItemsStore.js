@@ -1,11 +1,12 @@
-import {observable, decorate, action} from 'mobx';
+import {observable, decorate, action, computed} from 'mobx';
 
 class ItemsStore {
-  allItems = [];
-  shirt = [];
-  pants = [];
-  shoes = [];
+  @observable allItems = [];
+  @observable shirt = [];
+  @observable pants = [];
+  @observable shoes = [];
 
+  @action
   fetchItems() {
     console.log('fetch items...');
     fetch('http://www.mocky.io/v2/5e3940013200005e00ddf87e')
@@ -23,15 +24,16 @@ class ItemsStore {
           .sort((a, b) => a.name.localeCompare(b.name));
       });
   }
+
+  @computed
+  get getItemsType() {
+    return type => this[type].slice();
+  }
+
+  @computed
+  get getAll() {
+    return this.allItems.slice();
+  }
 }
-
-decorate(ItemsStore, {
-  allItems: observable,
-  shirts: observable,
-  pants: observable,
-  shoes: observable,
-
-  fetchItems: action,
-});
 
 export default new ItemsStore();

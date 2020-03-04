@@ -14,8 +14,8 @@ import Routes from '../Routes/Routes';
 import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+@inject('sets', 'items')
 class Select extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -26,23 +26,25 @@ class Select extends Component {
 
   componentDidMount(): void {
     this.props.navigation.addListener('willFocus', navigation => {
-      this.setState({
-        type: navigation.state.params.type,
-        items: this.props.items[navigation.state.params.type],
-        search: '',
-      });
+      this.updatePage();
     });
   }
 
   componentDidUpdate() {
     let itemType = this.props.navigation.getParam('type');
-    if(itemType != this.state.type) {
-      this.setState({
-        type: this.props.navigation.state.params.type,
-        items: this.props.items[this.props.navigation.state.params.type],
-        search: '',
-      });
+    if (itemType != this.state.type) {
+      this.updatePage();
     }
+  }
+
+  updatePage() {
+    this.setState({
+      type: this.props.navigation.state.params.type,
+      items: this.props.items.getItemsType(
+        this.props.navigation.state.params.type,
+      ),
+      search: '',
+    });
   }
 
   onAddItem(item) {
@@ -70,7 +72,7 @@ class Select extends Component {
       this.setState({items: result});
     } else {
       console.log('default');
-      let defaultResults = this.props.items[this.state.type].slice(0, 5);
+      let defaultResults = this.props.items.getItemsType(this.state.type).slice(0, 5);
       this.setState({items: defaultResults});
     }
   }
@@ -91,7 +93,7 @@ class Select extends Component {
       <View style={styles.container}>
         <View>
           <Button
-              title={'Back'}
+            title={'Back'}
             onPress={() =>
               this.props.navigation.navigate(Routes.Screens.HOME.routeName)
             }
@@ -141,7 +143,7 @@ class Select extends Component {
                 onPress={() =>
                   this.setState({
                     type: itemType,
-                    items: this.props.items[itemType],
+                    items: this.props.items.getItemsType(itemType),
                     search: '',
                   })
                 }
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-  }
+  },
 });
 
-export default inject('sets', 'items')(observer(Select));
+export default Select;
