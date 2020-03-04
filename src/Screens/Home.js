@@ -16,7 +16,7 @@ import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 
-@inject('sets', 'items')
+@inject('sets', 'items') @observer
 class Home extends Component {
   constructor(props) {
     super(props);
