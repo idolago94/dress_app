@@ -57,7 +57,7 @@ class Select extends Component {
     this.setState({search: text});
     if (text.length > 2) {
       console.log('search...');
-      let result = this.state.clothes.filter(item => {
+      let result = this.props.clothes[this.state.type].filter(item => {
         if (item.name.search(text) != -1) {
           return true;
         }
