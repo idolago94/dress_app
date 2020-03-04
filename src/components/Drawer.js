@@ -8,25 +8,35 @@ import {
   Platform,
 } from 'react-native';
 import Routes from '../Routes/Routes';
+import {inject} from 'mobx-react';
 
-export default function Drawer(props) {
-  function toSelect(type) {
-    props.navigation.navigate(Routes.Screens.SELECT.routeName, {type: type});
+@inject('clothes')
+class Drawer extends Component {
+  constructor(props) {
+    super(props);
   }
 
-  return (
-    <View style={styles.container}>
-      <TouchableHighlight onPress={() => toSelect('shirt')} style={styles.tab}>
-        <Text style={styles.tabContent}>Shirt Select</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => toSelect('pants')} style={styles.tab}>
-        <Text style={styles.tabContent}>Pants Select</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => toSelect('shoes')} style={styles.tab}>
-        <Text style={styles.tabContent}>Shoes Select</Text>
-      </TouchableHighlight>
-    </View>
-  );
+  toSelect(type) {
+    this.props.navigation.navigate(Routes.Screens.SELECT.routeName, {
+      type: type,
+    });
+    this.props.navigation.closeDrawer();
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.props.clothes.getTypes.map((type, i) => (
+          <TouchableHighlight
+            key={i}
+            onPress={() => this.toSelect(type)}
+            style={styles.tab}>
+            <Text style={styles.tabContent}>{type} select</Text>
+          </TouchableHighlight>
+        ))}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -44,3 +54,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+export default Drawer;

@@ -1,6 +1,5 @@
 import {observable, action, computed} from 'mobx';
-import {create, persist} from 'mobx-persist';
-import {AsyncStorage} from 'react-native';
+import {persist} from 'mobx-persist';
 
 const storageKeys = {
   SETS: 'setList',

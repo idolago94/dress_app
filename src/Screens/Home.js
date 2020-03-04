@@ -14,22 +14,18 @@ import {inject, observer} from 'mobx-react';
 import Routes from '../Routes/Routes';
 import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {create} from 'mobx-persist';
-import SetStore from '../mobx/SetStore';
 
-
-@inject('sets', 'items') @observer
+@inject('sets', 'clothes') @observer
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.itemTypes = ['shirt', 'pants', 'shoes'];
     this.state = {
       searchResults: [],
     };
   }
 
   async componentDidMount() {
-    this.props.items.fetchItems();
+    this.props.clothes.fetchItems();
   }
 
   onSaveSet() {
@@ -41,7 +37,7 @@ class Home extends Component {
     console.log(text);
     if (text.length > 2) {
       console.log('search...');
-      let result = this.props.items.getAll.filter(item => {
+      let result = this.props.clothes.getAll.filter(item => {
         if (item.name.search(text) != -1) {
           return true;
         }
@@ -56,7 +52,7 @@ class Home extends Component {
       this.setState({searchResults: result});
     } else {
       console.log('default');
-      let defaultResults = this.props.items.getAll.slice(0, 5);
+      let defaultResults = this.props.clothes.getAll.slice(0, 5);
       this.setState({searchResults: defaultResults});
     }
   }
@@ -96,7 +92,7 @@ class Home extends Component {
             style={{flex: 1}}
             keyExtractor={(item, index) => index.toString()}
             data={this.state.searchResults}
-            renderItem={({item, i}) => (
+            renderItem={({item}) => (
               <Item data={item} onAddItem={item => this.onAddItem(item)} />
             )}
           />
@@ -116,7 +112,7 @@ class Home extends Component {
             </Text>
           )}
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            {this.itemTypes.map((itemType, i) => (
+            {this.props.clothes.getTypes.map((itemType, i) => (
               <Button
                 key={i}
                 title={itemType}

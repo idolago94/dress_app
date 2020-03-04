@@ -14,7 +14,7 @@ import Routes from '../Routes/Routes';
 import Item from '../components/Item';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-@inject('sets', 'items')
+@inject('sets', 'clothes')
 class Select extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +40,7 @@ class Select extends Component {
   updatePage() {
     this.setState({
       type: this.props.navigation.state.params.type,
-      items: this.props.items.getItemsType(
+      items: this.props.clothes.getItemsType(
         this.props.navigation.state.params.type,
       ),
       search: '',
@@ -57,7 +57,7 @@ class Select extends Component {
     this.setState({search: text});
     if (text.length > 2) {
       console.log('search...');
-      let result = this.state.items.filter(item => {
+      let result = this.state.clothes.filter(item => {
         if (item.name.search(text) != -1) {
           return true;
         }
@@ -72,7 +72,9 @@ class Select extends Component {
       this.setState({items: result});
     } else {
       console.log('default');
-      let defaultResults = this.props.items.getItemsType(this.state.type).slice(0, 5);
+      let defaultResults = this.props.clothes
+        .getItemsType(this.state.type)
+        .slice(0, 5);
       this.setState({items: defaultResults});
     }
   }
@@ -135,17 +137,16 @@ class Select extends Component {
           ))}
         </View>
         <View style={styles.footer}>
-          {['shirt', 'pants', 'shoes'].map((itemType, i) =>
+          {this.props.clothes.getTypes.map((itemType, i) =>
             itemType == this.state.type ? null : (
               <Button
                 key={i}
                 title={`select ${itemType}`}
                 onPress={() =>
-                  this.setState({
-                    type: itemType,
-                    items: this.props.items.getItemsType(itemType),
-                    search: '',
-                  })
+                  this.props.navigation.navigate(
+                    Routes.Screens.SELECT.routeName,
+                    {type: itemType},
+                  )
                 }
               />
             ),

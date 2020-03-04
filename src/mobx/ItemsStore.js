@@ -5,6 +5,7 @@ class ItemsStore {
   @observable shirt = [];
   @observable pants = [];
   @observable shoes = [];
+  @observable types = ['shirt', 'pants', 'shoes'];
 
   @action
   fetchItems() {
@@ -13,16 +14,17 @@ class ItemsStore {
       .then(res => res.json())
       .then(response => {
         this.allItems = response.results;
-        this.shirt = response.results
-          .filter(item => item.type == 'shirt')
-          .sort((a, b) => a.name.localeCompare(b.name));
-        this.pants = response.results
-          .filter(item => item.type == 'pants')
-          .sort((a, b) => a.name.localeCompare(b.name));
-        this.shoes = response.results
-          .filter(item => item.type == 'shoes')
-          .sort((a, b) => a.name.localeCompare(b.name));
+        this.types.map(ty => {
+          this[ty] = response.results
+            .filter(item => item.type == ty)
+            .sort((a, b) => a.name.localeCompare(b.name));
+        });
       });
+  }
+
+  @computed
+  get getTypes() {
+    return this.types.slice();
   }
 
   @computed

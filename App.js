@@ -15,7 +15,7 @@ hydrate('newSet', SetStore);
 
 const App: () => React$Node = () => {
   return (
-    <Provider items={ItemsStore} sets={SetStore}>
+    <Provider clothes={ItemsStore} sets={SetStore}>
       <DrawerNavigator />
     </Provider>
   );
